@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Colour guessing game</title>
+</head>
+<body onload="do_game()">
+
+
+
+<script>
+
+//Array to store colors and sort them
+var colors=["black","brown","red","green","white","blue","yellow"];
+colors.sort();
+
+//Setting up min and max values
+var max_value = 7;
+console.log("Colors are:"+colors); //testing purpose
+var number;
+
+//Setting up our target, and a flag variable
+var target;
+
+
+
+//Count variable
+var count = 0;
+
+  function do_game()
+  {
+
+    //Setting up our target, and a flag variable
+    number = Math.floor(Math.random()*max_value);
+    target = colors[number];
+    console.log("Target is:"+target);
+    //alert("Target color is:"+" "+ target);
+    var finished = false;
+
+    //the loop part
+    while(!finished)
+    {
+      //input section from the user
+      var user_input = prompt("I am thinking of one of these colors:\n\n"
+      + colors+
+      "\n\nWhat color am I thinking of");
+
+
+      /*
+      We will use indexOf to determine the correct input, if the item is not found
+      , it will return -1, so we can be assured that the user has entered a garbage
+      value or something that is not in the realm of our game.
+      */
+
+      console.log(colors.indexOf(user_input));
+      var index_value = colors.indexOf(user_input);
+
+
+      count++;
+      finished = check_guess(user_input,index_value);
+
+
+    }
+
+
+
+
+
+
+
+  }
+
+  //time delay function, need a seperate function in order for the
+  //setTimeout function to work
+  function welcome()
+  {
+    alert("Congratz, your guess is correct\n\n"+
+    "Your total guess:"+count);
+  }
+
+function check_guess(user_input,index_value)
+{
+  // alert for unrecognized value
+  if(index_value<0)
+    {
+      alert("I don't recognize what you entered as input");
+      return false;
+    }
+
+// alert for higher order
+    if(user_input>target)
+    {
+      alert("Wrong guess\n\n"+
+      "Hint: Your input is alphabetically higher than the target value");
+      return false;
+    }
+
+    // alert for lower order
+        if(user_input<target)
+        {
+          alert("Wrong guess\n\n"+
+          "Hint: Your input is alphabetically lower than the target value");
+          return false;
+        }
+
+        //time delay so that the message comes a bit later
+        //after changing the color
+        myBody=document.getElementsByTagName("body")[0];
+        myBody.style.background=target;
+        setTimeout(welcome, 500); //the time delay function
+
+    return true;
+}
+
+</script>
+
+</body>
+</html>
